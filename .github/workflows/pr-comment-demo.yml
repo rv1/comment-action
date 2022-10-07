@@ -22,6 +22,7 @@ jobs:
         if: steps.input-check.outputs.triggered == 'true'
       - name: Trigger CircleCI workflow
         id: circleci-action
+        if: steps.input-check.outputs.triggered == 'true'
         uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.5
         with:
           GHA_Meta: Custom Meta Data

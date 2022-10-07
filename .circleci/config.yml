@@ -16,14 +16,16 @@ parameters:
 
 jobs:
   echo-params:
+    resource_class: small
     docker:
       - image: cimg/base:stable
     steps:
-      - run: echo Running Echo Param Job!
-      - run: echo "GHA_Actor << pipeline.parameters.GHA_Actor >>"
-      - run: echo "GHA_Action << pipeline.parameters.GHA_Action >>"
-      - run: echo "GHA_Event << pipeline.parameters.GHA_Event >>"
-      - run: echo "GHA_Meta << pipeline.parameters.GHA_Meta >>"
+      - run: |
+        echo Running Echo Param Job!
+        echo "GHA_Actor << pipeline.parameters.GHA_Actor >>"
+        echo "GHA_Action << pipeline.parameters.GHA_Action >>"
+        echo "GHA_Event << pipeline.parameters.GHA_Event >>"
+        echo "GHA_Meta << pipeline.parameters.GHA_Meta >>"
 
 workflows:
   echo-workflow:
