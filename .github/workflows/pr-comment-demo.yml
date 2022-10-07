@@ -1,0 +1,29 @@
+name: GitHub Actions - Comment CI Trigger
+
+run-name: ${{ github.actor }} is running the trigger GitHub Actions 🚀
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  Echo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: khan/pull-request-comment-trigger@v1.1.0
+        id: input-check
+        with:
+          trigger: 'echo'
+          prefix_only: true
+          reaction: rocket
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      - run: 'echo Roger That'
+        if: steps.input-check.outputs.triggered == 'true'
+      - name: Trigger CircleCI workflow
+        id: circleci-action
+        uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.5
+        with:
+          GHA_Meta: Custom Meta Data
+        env:
+          CCI_TOKEN: ${{ secrets.CCI_TOKEN }}

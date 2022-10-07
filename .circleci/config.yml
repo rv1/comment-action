@@ -1,0 +1,32 @@
+version: 2.1
+
+parameters:
+  GHA_Actor:
+    type: string
+    default: ""
+  GHA_Action:
+    type: string
+    default: ""
+  GHA_Event:
+    type: string
+    default: ""
+  GHA_Meta:
+    type: string
+    default: ""
+
+jobs:
+  echo-params:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - run: echo Running Echo Param Job!
+      - run: echo "GHA_Actor << pipeline.parameters.GHA_Actor >>"
+      - run: echo "GHA_Action << pipeline.parameters.GHA_Action >>"
+      - run: echo "GHA_Event << pipeline.parameters.GHA_Event >>"
+      - run: echo "GHA_Meta << pipeline.parameters.GHA_Meta >>"
+
+workflows:
+  echo-workflow:
+    when: << pipeline.parameters.GHA_Action >>
+    jobs:
+      - echo-params
